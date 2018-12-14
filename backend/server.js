@@ -25,7 +25,7 @@ app.put("/createList",function(req,res){
 
     let newList = new ToDoList()
 
-    newList.title = parsed.title
+    newList.title = parsed.title.toUpperCase()
     newList.description= parsed.description
     newList.dueDate = parsed.dueDate
 
@@ -39,9 +39,14 @@ app.put("/createList",function(req,res){
     })
 })
 
-app.get("/getAllLists", function(req,res){
-
+app.post("/getAllLists", function(req,res){
+let parsed= JSON.parse(req.body)
+let sortingType = parsed.sortingType
+if (sortingType===""){
+sortingType= "createdAt"
+}
     ToDoList.find()
+    .sort([[sortingType, 1]])
     .exec(function(err,lists){
         if(err){
             res.send(JSON.stringify({error: true, message:"error getting the lists"}))
@@ -188,6 +193,10 @@ app.put("/editItem", function(req,res){
         }
     })
 })
+
+app.post("/sortTitle"), function(req,res){}
+
+app.post("/sortDueDate"), function(req,res){}
 
 app.listen(4000, ()=>{
     console.log("running on 4000")

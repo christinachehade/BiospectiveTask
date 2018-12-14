@@ -9,3 +9,5 @@
 - /removeList   |  DELETE      done
 - /editItem  | PUT             done
 - /------------------------------------------
+-/sortTitle
+-/sortDueDate
