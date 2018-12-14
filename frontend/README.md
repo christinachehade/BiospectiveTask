@@ -1,3 +1,21 @@
+This is a Todo Application for the Office Management Staff At Biospective!
+
+Add A title, description and due date for your List. Once the list is created you may add items to it. You can edit or delete your items at anytime. The Updates can be seen withing the Todo List and are shown through time stamps.
+
+The status of the List can be switched from active to complete by clicking on the flashing text
+
+You can remove all items or delete the list completely as well as Sort by Title, or Due Date in Ascending Order.
+
+Enjoy!
+
+#Before running: 'npm start'
+
+
+Potential todos/future improvements: Enhancing UI much More!!!
+Adding the option of users. 
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
