@@ -5,6 +5,10 @@ class ListGrid extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            newInput:"",
+            itemIndex:"",
+            listId: "",
+            flag:false,
             lists:[],
             itemsInput: ""
         }
@@ -46,25 +50,84 @@ class ListGrid extends Component {
         })
     }
 
+    removeItemHandler=(index, id)=>{
+        fetch('/removeItem', {method: "DELETE", body: JSON.stringify({
+            index: index,
+            id: id
+        })}).then(res=>{return res.text()})
+        .then(response=>{
+            console.log(response)
+        })
+    }
+editItemHandler =(id, index)=>{
+    this.setState({flag: true, listId:id, itemIndex: index})
+}
+
+changedItemHandler=(event)=>{
+    this.setState({newInput: event.target.value})
+}
+saveChangedHandler=(id, index)=>{
+    fetch('/editItem', {method: "PUT", body: JSON.stringify({
+        id: id,
+        index: index, 
+        newInput: this.state.newInput
+    })}).then(res=>{return res.text()})
+    .then(response=>{
+        console.log(response)
+    })
+}
+
+removeAllHandler=(id)=>{
+    fetch('/removeAllItems', {method: "DELETE", body: JSON.stringify({
+        id: id
+    })}).then(res=>{return res.text()})
+    .then(response=>{
+        console.log(response)
+    })
+}
+removeListHandler=(id)=>{
+    fetch('/removeList', {method: "DELETE", body: JSON.stringify({
+        id: id
+    })}).then(res=>{return res.text()})
+    .then(response=>{
+        console.log(response)
+    })
+}
     render() {
+        let editform = null
+        if (this.state.flag){
+            editform = (<div>
+                <input onChange={this.changedItemHandler} type="text"/>
+                <button onClick= {()=>this.saveChangedHandler(this.state.listId, this.state.itemIndex)}>save</button>
+            </div>)
+        }
         return (<div>
-            {this.state.lists.map((list,index) => {
+            {this.state.lists.map((list) => {
                 return (<div>
                     <div>{list.title}</div>
                     <div>{list.description}</div>
-                    <div>{list.dueDate}</div>
-                    <div>{list.items}</div>
-                    <div>{list.createdAt}</div>
-                    <div>{list.completedAt}</div>
-                    <div>{list.updatedAt}</div>
+                    <div>Due Date:{list.dueDate}</div>
+                    <div>{list.items.map((item,index)=>{
+                        return(<div>
+                            <div>{item}</div>
+                            <button onClick={()=>this.removeItemHandler(index, list._id)}>remove item</button>
+                            <button onClick={()=>this.editItemHandler(list._id,index)}>edit item</button>
+                        </div>)
+                        
+                    })}</div>
+                    
+                    <div>Created At:{list.createdAt}</div>
+                    <div>Completed At:{list.completedAt}</div>
+                    <div>Updated At:{list.updatedAt}</div>
                   
                     <button onClick={()=>this.statusHandler(list._id)}>{list.status}</button>
-
                         <input type="text" onChange={this.addItemHandler} ></input>
                         <button onClick={()=>this.itemSubmitHandler(list._id)}>Add item</button>
-                
+                        <button onClick={()=>this.removeAllHandler(list._id)}>Remove All Items</button>
+                        <button onClick={()=>this.removeListHandler(list._id)}>Remove List</button>
                 </div>)
             })}
+             <div>{editform}</div>
         </div>)
     }
 }
