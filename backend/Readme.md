@@ -1,12 +1,11 @@
 #EndPoint:
 - /createList | PUT                done
 - /getAllLists | GET               done
-- /addItem/:id | PUT               done
+- /addItem| PUT               done
 - /getListById | GET               done
-- /removeItem/:id | DELETE         done
-- /completedList/:id | POST        done
+- /removeItem | DELETE         done
+- /completedList | POST        done
 - /removeAllItems | DELETE         done
-- /removeList/:id   |  DELETE      done
-
+- /removeList   |  DELETE      done
+- /editItem  | PUT             done
 - /------------------------------------------
-- /editItem/:id  | PUT
