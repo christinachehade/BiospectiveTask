@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import'../App.css'
 
 class ListGrid extends Component {
     constructor(props) {
@@ -10,13 +11,15 @@ class ListGrid extends Component {
             listId: "",
             flag:false,
             lists:[],
-            itemsInput: ""
+            itemsInput: "",
+            sortingType:""
         }
     }
     componentDidMount() {
         setInterval(() => {
-            fetch('./getAllLists')
-                .then(res => { return res.text() })
+            fetch('./getAllLists',{method:"POST",body: JSON.stringify({
+                sortingType: this.state.sortingType
+            })}).then(res => { return res.text() })
                 .then(response => {
                     let parsed = JSON.parse(response)
                     console.log(parsed)
@@ -93,6 +96,12 @@ removeListHandler=(id)=>{
         console.log(response)
     })
 }
+sortByDueDate=()=>{
+    this.setState({sortingType: "dueDate"})
+}
+sortByTitle=()=>{
+    this.setState({sortingType:"title"})
+}
     render() {
         let editform = null
         if (this.state.flag){
@@ -102,16 +111,21 @@ removeListHandler=(id)=>{
             </div>)
         }
         return (<div>
+            <div className="sort-nav">
+            <div>Sort By:</div>
+            <button className="buttons"onClick={this.sortByDueDate}>Due Date</button>
+            <button className="buttons" onClick={this.sortByTitle}>Title</button>
+            </div>
             {this.state.lists.map((list) => {
-                return (<div>
+                return (<div className="list-container">
                     <div>{list.title}</div>
                     <div>{list.description}</div>
                     <div>Due Date:{list.dueDate}</div>
                     <div>{list.items.map((item,index)=>{
                         return(<div>
                             <div>{item}</div>
-                            <button onClick={()=>this.removeItemHandler(index, list._id)}>remove item</button>
-                            <button onClick={()=>this.editItemHandler(list._id,index)}>edit item</button>
+                            <button className="buttons" onClick={()=>this.removeItemHandler(index, list._id)}>remove item</button>
+                            <button className="buttons" onClick={()=>this.editItemHandler(list._id,index)}>edit item</button>
                         </div>)
                         
                     })}</div>
@@ -121,10 +135,13 @@ removeListHandler=(id)=>{
                     <div>Updated At:{list.updatedAt}</div>
                   
                     <button onClick={()=>this.statusHandler(list._id)}>{list.status}</button>
-                        <input type="text" onChange={this.addItemHandler} ></input>
-                        <button onClick={()=>this.itemSubmitHandler(list._id)}>Add item</button>
-                        <button onClick={()=>this.removeAllHandler(list._id)}>Remove All Items</button>
-                        <button onClick={()=>this.removeListHandler(list._id)}>Remove List</button>
+                        <div className="add-item">
+                        <input className="input" type="text" onChange={this.addItemHandler} ></input>
+                        <button className="buttons" onClick={()=>this.itemSubmitHandler(list._id)}>Add item</button>
+                        </div>
+                        <button className="buttons" onClick={()=>this.removeAllHandler(list._id)}>Remove All Items</button>
+                        <button className="buttons"onClick={()=>this.removeListHandler(list._id)}>Remove List</button>
+                    
                 </div>)
             })}
              <div>{editform}</div>

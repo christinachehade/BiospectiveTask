@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import '../App.css'
 
 class CreateList extends Component {
     constructor() {
@@ -38,12 +39,18 @@ class CreateList extends Component {
     }
 
     render() {
-        return (<div>
+        return (<div className ="todo-form">
+        <th>Add A Todo List</th>
             <form onSubmit={this.submitHandler}>
-                <input type="text" onChange={this.titleHandler} />
-                <input type="text" onChange={this.descriptionHandler} />
+                <th>Title:</th>
+                <input type="text" onChange={this.titleHandler}/>
+                <th>Description:</th>
+                <textarea type="text" onChange={this.descriptionHandler} />
+                <th>Due Date:</th>
                 <input type="date" placeholder="YYYY-MM-DD" onChange={this.dueDateHandler} />
-                <input type="submit" value="Create List" />
+                <div>
+                <input className="buttons" type="submit" value="Create List" />
+                </div>
             </form>
         </div>
         )
