@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import'../App.css'
+import Moment from 'moment'
 
 class ListGrid extends Component {
     constructor(props) {
@@ -104,43 +105,48 @@ sortByTitle=()=>{
 }
     render() {
         let editform = null
+
         if (this.state.flag){
-            editform = (<div>
+            editform = (<div className="edit-form">
+            <th>Edit Item Here:</th>
                 <input onChange={this.changedItemHandler} type="text"/>
                 <button onClick= {()=>this.saveChangedHandler(this.state.listId, this.state.itemIndex)}>save</button>
             </div>)
         }
-        return (<div>
+        return (<div className="main">
             <div className="sort-nav">
-            <div>Sort By:</div>
-            <button className="buttons"onClick={this.sortByDueDate}>Due Date</button>
-            <button className="buttons" onClick={this.sortByTitle}>Title</button>
+            <th>Sort By:</th>
+            <button onClick={this.sortByDueDate}>Due Date</button>
+            <button onClick={this.sortByTitle}>Title</button>
             </div>
             {this.state.lists.map((list) => {
                 return (<div className="list-container">
-                    <div>{list.title}</div>
-                    <div>{list.description}</div>
-                    <div>Due Date:{list.dueDate}</div>
-                    <div>{list.items.map((item,index)=>{
-                        return(<div>
-                            <div>{item}</div>
-                            <button className="buttons" onClick={()=>this.removeItemHandler(index, list._id)}>remove item</button>
-                            <button className="buttons" onClick={()=>this.editItemHandler(list._id,index)}>edit item</button>
+                    <div className="title1">{list.title}</div>
+                    <div className="titles">Description:{list.description}</div>
+                    <div className="titles">Due Date:{new Moment(list.dueDate).format("MMM Do YYYY")}</div>
+                    <ol>{list.items.map((item,index)=>{
+                        return(<div className="items">
+                            <li>{item}</li>
+                            <button className="small-btn"onClick={()=>this.removeItemHandler(index, list._id)}>Remove</button>
+                            <button className="small-btn" onClick={()=>this.editItemHandler(list._id,index)}>Edit</button>
                         </div>)
                         
-                    })}</div>
-                    
-                    <div>Created At:{list.createdAt}</div>
-                    <div>Completed At:{list.completedAt}</div>
-                    <div>Updated At:{list.updatedAt}</div>
+                    })}</ol>
+                
+
+
+                    <div>Created At:{new Moment(list.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</div>
+                    <div>Completed At:{new Moment(list.completedAt).format('MMMM Do YYYY, h:mm:ss a')}</div>
+                    <div>Updated At:{new Moment(list.updatedAt).format('MMMM Do YYYY, h:mm:ss a')}</div>
+
                   
-                    <button onClick={()=>this.statusHandler(list._id)}>{list.status}</button>
+                        <a className="status"onClick={()=>this.statusHandler(list._id)}>Status:&nbsp;{list.status}</a>
                         <div className="add-item">
                         <input className="input" type="text" onChange={this.addItemHandler} ></input>
-                        <button className="buttons" onClick={()=>this.itemSubmitHandler(list._id)}>Add item</button>
+                        <button onClick={()=>this.itemSubmitHandler(list._id)}>Add item</button>
                         </div>
-                        <button className="buttons" onClick={()=>this.removeAllHandler(list._id)}>Remove All Items</button>
-                        <button className="buttons"onClick={()=>this.removeListHandler(list._id)}>Remove List</button>
+                        <button onClick={()=>this.removeAllHandler(list._id)}>Remove All Items</button>
+                        <button onClick={()=>this.removeListHandler(list._id)}>Delete List</button>
                     
                 </div>)
             })}

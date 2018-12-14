@@ -45,11 +45,11 @@ class CreateList extends Component {
                 <th>Title:</th>
                 <input type="text" onChange={this.titleHandler}/>
                 <th>Description:</th>
-                <textarea type="text" onChange={this.descriptionHandler} />
+                <textarea rows="4" cols="47" type="textarea" onChange={this.descriptionHandler} />
                 <th>Due Date:</th>
                 <input type="date" placeholder="YYYY-MM-DD" onChange={this.dueDateHandler} />
                 <div>
-                <input className="buttons" type="submit" value="Create List" />
+                <input type="submit" value="Create List" />
                 </div>
             </form>
         </div>

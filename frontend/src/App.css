@@ -1,18 +1,28 @@
+.App{
+  background-color: whitesmoke;
+}
+.img{
+height: 300px;
+
+}
+
+.main{
+ display: flex;
+ flex-wrap: wrap;
+ min-width: 1200px;
+}
 .todo-form{
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   flex-direction: column;
   align-items: center;
   text-align: center;
 }
 
+
 .sort-nav{
   display: flex;
-  justify-content: space-around;
   flex-direction: column;
-  align-items: center;
-  
-
 }
 
 .list-container{
@@ -20,28 +30,79 @@
   flex-direction: column;
   justify-content: space-around;
   border-width: 2px;
-  border-color: rgb(19, 28, 53);
+  border-color: rgb(18, 32, 71);
   border-style: solid;
   text-align: center;
-  margin: 10%;
-  box-shadow: 5px 6px #bbbbbb;
-  transition: transform .2s; /* Animation */
+  width: 30%;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 10px 11px #bbbbbb;
+  margin: 2%;
+}
+
+a{
+  cursor: pointer; 
 }
 
 .edit-container{
   display:flex;
 }
-
-.buttons{
+button{
   width: 100px;
- 
   margin: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  border-color: black;
+  background-color: rgb(25, 27, 58);
+  color: white;
+}
+
+.small-btn{
+  width: 40px;
+  font-size: 4pt;
+}
+
+.title1{
+  color: black;
+  font-weight: bold;
+  text-decoration: underline;
   padding: 5px;
 }
 
-.input{
-  display: flex;
-  justify-content: space-between;
-  width: 400px;
-  height: 40px;
+.titles{
+  color: black;
+  font-weight: bold;
 }
+
+input{
+  margin-bottom: 10px;
+  width: 300px;
+  border-radius: 5px;
+  font-size: 11pt;
+  margin-top: 20px;
+}
+.edit-form{
+  position: fixed;
+  top: 0;
+  margin-right: 10px;
+}
+
+.status{
+  animation: blinker 1.6s linear infinite;
+  border-width: 1px;
+  border-color: black;
+  border-style: solid;
+  width: 200px;
+  margin-left: 25%;
+  margin-top: 20px;
+}
+
+.status:hover{
+  font-weight: bold;
+  color: rgb(212, 16, 16);
+}
+
+@keyframes blinker {
+  50% {
+      opacity: 0;
+      }
+    }
